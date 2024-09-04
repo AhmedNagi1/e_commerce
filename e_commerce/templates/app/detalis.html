@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Details</title>
+    <link rel="stylesheet" href="{% static "app/css/detalis.css" %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="#" class="back-button" onclick="window.history.back(); return false;">←</a>
+
+        </div>
+        <img src="{{product.image.url}}" alt="details" class="product-image">
+        <div class="product-info">
+            <h1>{{product.name}}</h1>
+            <p class="price">{{product.price}}</p>
+
+            <div class="details">
+                <h2>The Details</h2>
+                <p>{{product.description}}</p>
+            </div>
+            <br>
+            <div class="buttons">
+                <button class="btn btn-secondary">Add to Wishlist</button>
+                <button class="btn btn-primary">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

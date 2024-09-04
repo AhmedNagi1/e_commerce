@@ -1,0 +1,14 @@
+<div class="categories">
+    <a href="{% url 'home' %}" rel="noopener noreferrer" style="text-decoration: none;"><button class="active">All</button></a>
+    <a href="{% url 'laptop' %}" rel="noopener noreferrer"><button class="active">Laptop</button></a>
+    <a href="{% url 'mobile' %}" rel="noopener noreferrer"><button class="active">Mobile devices</button></a>
+    <a href="{% url 'watch' %}" rel="noopener noreferrer"><button class="active">Watches</button></a>
+</div>
+<script>
+    document.querySelectorAll('nav button').forEach(button => {
+        button.addEventListener('click', function() {
+            document.querySelector('nav button.active').classList.remove('active');
+            this.classList.add('active');
+        });
+    });
+</script>

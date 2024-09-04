@@ -20,6 +20,7 @@ urlpatterns = [
     # User management
     path("users/", include("e_commerce.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
+    path("app/", include("e_commerce.app.urls")),
     # Your stuff: custom urls includes go here
     # ...
     # Media files
