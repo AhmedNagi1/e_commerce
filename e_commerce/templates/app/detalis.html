@@ -11,8 +11,12 @@
     <div class="container">
         <div class="header">
             <a href="#" class="back-button" onclick="window.history.back(); return false;">←</a>
-
         </div>
+        {% if success %}
+            <div class="alert alert-success">
+                Add to Cart
+            </div>
+        {% endif %}
         <img src="{{product.image.url}}" alt="details" class="product-image">
         <div class="product-info">
             <h1>{{product.name}}</h1>
@@ -23,11 +27,102 @@
                 <p>{{product.description}}</p>
             </div>
             <br>
-            <div class="buttons">
-                <button class="btn btn-secondary">Add to Wishlist</button>
-                <button class="btn btn-primary">Add to Cart</button>
+            <form method="post" action="{% url "wishlist" %}"> {% csrf_token %}
+                <div class="buttons">
+                    <button name="wishlist" class="btn btn-secondary" value="{{product.ref}}">Add to Wishlist</button>
+                </div>
+            </form>
+            <form method="post" action="{% url "cart" %}">
+                <div class="buttons">
+                    <button name="cart" class="btn btn-primary" value="{{product.ref}}">Add to Cart</button>
+                </div>
+            </form>
+            <div class="buttons buy">
+                <button name="buy" class="btn btn-primary" id="buy" value="{{product.ref}}" onclick="confirmPurchase()">Buy</button>
             </div>
         </div>
     </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    const csrfToken = "{{ csrf_token }}";
+
+    function sendPostRequest() {
+        Swal.fire({
+            title: "Processing...",
+            text: "Please wait while we complete your purchase.",
+            icon: "info",
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        fetch("{% url 'product_buy' %}", {  
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken 
+            },
+            body: JSON.stringify({
+                buy: "{{ product.ref }}"
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();  
+        })
+        .then(data => {
+            Swal.close();
+            console.log('Success:', data);
+            Swal.fire({
+                title: "Purchased",
+                text: "You have purchased successfully",
+                icon: "success"
+            });  
+        })
+        .catch(error => {
+            Swal.close();
+            console.error('Error:', error); 
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+            });
+        });
+    }
+
+    function confirmPurchase() {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: "btn btn-success",
+                cancelButton: "btn btn-danger"
+            },
+            buttonsStyling: false // Ensure this is what you want; change to true if needed
+        });
+
+        swalWithBootstrapButtons.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, purchase it!",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                sendPostRequest();
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire({
+                    title: "Cancelled",
+                    text: "Your purchase is safe :)",
+                    icon: "error"
+                });
+            }
+        });
+    }
+</script>
 </body>
 </html>

@@ -2,27 +2,28 @@
 {% include "app/base.html" %}
 {% load static %}
 {% block head %}
-    <title>Mobile</title>
+    <title>Laptop</title>
     <link rel="stylesheet" href="{% static "app/css/home.css" %}">
 {% endblock head %}
 {% block contant %}
     <div class="container">
+        {{ request.path|slice:'5:-1' }}
         <header>
-            <h1>Mobile</h1>
+            <h1>Laptop</h1>
             <div class="search-bar">
                 <input type="text" placeholder="Search...">
                 <button><span class="material-icons">search</span></button>
             </div>
         </header>
-        {% include 'app/nav_par.html' %}
+        {% include "app/nav_par.html" %}
         <div class="product-grid">
-            {% for i in category %}
+            {% for product in products %}
                 <div class="product-card">
-                    <a href="{% url 'detalis' ref=i.ref %}">
-                        <img src="{{i.image.url}}" alt="Nike" class="product-image">
+                    <a href="{% url 'detalis' ref=product.ref %}">
+                        <img src="{{product.image.url}}" alt="Nike" class="product-image">
                         <div class="product-info">
-                            <h3 class="product-name">{{i.name}}</h3>
-                            <p class="product-price">${{i.price}}</p>
+                            <h3 class="product-name">{{product.name}}</h3>
+                            <p class="product-price">${{product.price}}</p>
                         </div>
                     </a>
                 </div>
@@ -38,5 +39,6 @@
             });
         });
         
+
     </script>
 {% endblock contant %}

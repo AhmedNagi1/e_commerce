@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from app.models import * 
-category = Category.objects.get(id=3)
+from e_commerce.users.models import User
+from django.http import JsonResponse
 
-# حذف جميع المنتجات المرتبطة بهذه الفئة
 def home(request):
     product = Product.objects.all().order_by('?')
     context = {
@@ -40,19 +40,51 @@ def detalis(request, ref):
     return render(request, 'app/detalis.html', context)
 
 
-# def home(request):
-#     category = Category.objects.all()
-#     product = Product.objects.all()
-#     context = {
-#         # "category": category,
-#         "product": product,
-#     }
-#     return render(request, 'app/home.html', context)
-# def home(request):
-#     category = Category.objects.all()
-#     product = Product.objects.all()
-#     context = {
-#         # "category": category,
-#         "product": product,
-#     }
-#     return render(request, 'app/home.html', context)
+
+def cart(request):
+    user_cart, created = Cart.objects.get_or_create(user=request.user)
+    if request.method == 'POST':
+        prodect_ref = request.POST.get("cart")
+        prodect = Product.objects.get(ref=prodect_ref)
+        user_cart.products.add(prodect)
+        return redirect('cart')
+    
+    products = user_cart.products.all()
+    
+    context = {
+        'prodect': user_cart,
+        'products': products
+    }
+    return render(request, 'app/cart.html', context=context)
+    
+
+def wishlist(request):
+    user_wishlist, created = Wishlist.objects.get_or_create(user=request.user)
+    if request.method == 'POST':
+        prodect_ref = request.POST.get("wishlist")
+        prodect = Product.objects.get(ref=prodect_ref)
+        user_wishlist.products.add(prodect)
+        return redirect('wishlist')
+    
+    products = user_wishlist.products.all()
+    
+    context = {
+        'prodect': user_wishlist,
+        'products': products
+    }
+    return render(request, 'app/wishlist.html', context=context)
+    
+
+import json
+def product_buy(request):
+    if request.method == 'POST':
+        data = json.loads(request.body.decode('utf-8'))
+        buy = data['buy']
+        
+        if True: #Your code to check
+            return JsonResponse({'message': 'Product purchased successfully!', 'status': 'success'})
+        else: 
+            return JsonResponse({'message': 'Invalid JSON', 'status': 'error'}, status=400)
+
+    return JsonResponse({'message': 'Invalid request method', 'status': 'error'}, status=405)
+

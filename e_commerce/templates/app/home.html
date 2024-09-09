@@ -28,14 +28,7 @@
                 </div>
             {% endfor %}
         </div>
-        <nav>
-            <a href="#"><button class="active"><span class="material-icons">home</span>Home</button></a>
-            <a href="#"><button><span class="material-icons">search</span>Categories</button></a>
-            <a href="#"><button><span class="material-icons">favorite_border</span>Wishlist</button></a>
-            <a href="#"><button><span class="material-icons">shopping_cart</span>Cart</button></a>
-            <a href="#"><button><span class="material-icons">person_outline</span>Me</button></a>
-
-        </nav>
+        {% include "app/footer.html" %}
     </div>
     <script>
         document.querySelectorAll('.categories button').forEach(button => {

@@ -1,7 +1,7 @@
 from django.db import models
 import random
 import uuid
-
+from e_commerce.users.models import User
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -21,3 +21,28 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+class Cart(models.Model):
+    user = models.ForeignKey(User, related_name='cart', on_delete=models.CASCADE)
+    products = models.ManyToManyField(Product, related_name='carts')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Cart of {self.user.username}"
+
+class Wishlist(models.Model):
+    user = models.ForeignKey(User, related_name='wishlist', on_delete=models.CASCADE)
+    products = models.ManyToManyField(Product, related_name='wishlists')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Wishlist of {self.user.username}"
+    
+    
+class ProdectBuy(models.Model):
+    user = models.ForeignKey(User, related_name='buy', on_delete=models.CASCADE)
+    products = models.ManyToManyField(Product, related_name='buy')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"prodec buy of {self.user.username}"
