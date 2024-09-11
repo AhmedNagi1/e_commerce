@@ -88,3 +88,20 @@ def product_buy(request):
 
     return JsonResponse({'message': 'Invalid request method', 'status': 'error'}, status=405)
 
+
+def product_search(request):
+
+    query = request.GET.get('q')
+
+    if query:
+        results = Product.objects.filter(name__icontains=query)
+        print("#"*100)
+        print(len(results))
+        print("#"*100)
+        return render(request, 'app/search.html', {'query': query, 'products': results})
+    else:
+        return JsonResponse({'error': 'No search query provided'}, status=400)
+
+
+def setting(request):
+    return render(request, 'app/settings.html')

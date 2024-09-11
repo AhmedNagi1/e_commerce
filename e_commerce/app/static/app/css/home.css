@@ -71,11 +71,7 @@ a {
     transition: color 0.3s ease;
 }
 
-.categories button.active {
-    color: #000;
-    border-bottom: 2px solid #007bff; /* الخط السفلي تحت الزر النشط */
-    font-weight: bold;
-}
+
 
 .categories button:hover {
     color: #007bff;

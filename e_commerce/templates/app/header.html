@@ -1,0 +1,34 @@
+<!-- search.html -->
+
+<div class="search-bar">
+    <input type="text" placeholder="Search..." readonly onclick="searchProduct()">
+    <button><span class="material-icons">search</span></button>
+</div>
+<script>
+  function searchProduct() {
+    Swal.fire({
+        title: "Search Product",
+        input: "text",
+        inputAttributes: {
+            autocapitalize: "off"
+        },
+        showCancelButton: true,
+        showLoaderOnConfirm: true,
+        confirmButtonText: "Look up",
+        showLoaderOnConfirm: true,
+        preConfirm: (productName) => {
+            if (!productName) {
+                Swal.showValidationMessage('Please enter a product name.');
+                return;
+            }
+            // URL for search, replace 'product_search' with the correct URL if necessary
+            const searchUrl = `{% url 'product_search' %}?q=${encodeURIComponent(productName)}`;
+            
+            // Redirect to the search URL with the query
+            window.location.href = searchUrl;
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    });
+}
+
+</script>

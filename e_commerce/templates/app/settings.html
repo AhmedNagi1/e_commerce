@@ -1,0 +1,52 @@
+
+{% include "app/base.html" %}
+{% load static %}
+{% block head %}
+    <title>Settings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{% static "app/css/settings.css" %}">
+{% endblock head %}
+{% block contant %}
+    <div class="container">
+        <div class="header">
+            <i class="fas fa-chevron-left"></i>
+            <h1>Settings</h1>
+            <div></div>
+        </div>
+        <div class="section">
+            <h2>Account</h2>
+            <div class="item">
+                <span>Manage account</span>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Preferences</h2>
+            <div class="item">
+                <span>Notifications</span>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="item">
+                <span>Language</span>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="item">
+                <span>Logout</span>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Theme</h2>
+            <div class="item">
+                <span>Dark mode</span>
+                <div class="toggle-switch"></div>
+            </div>
+        </div>
+    </div>
+   
+    <script>
+        document.querySelector('.toggle-switch').addEventListener('click', function() {
+            this.classList.toggle('active');
+        });
+    </script>
+{% endblock %}

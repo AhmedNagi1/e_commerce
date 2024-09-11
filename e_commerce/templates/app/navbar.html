@@ -1,0 +1,72 @@
+<div class="categories">
+
+    <a href="{% url 'home' %}" rel="noopener noreferrer" style="text-decoration: none;"><button class="active">All</button></a>
+    <a href="{% url 'laptop' %}" rel="noopener noreferrer"><button class="active">Laptop</button></a>
+    <a href="{% url 'mobile' %}" rel="noopener noreferrer"><button class="active">Mobile devices</button></a>
+    <a href="{% url 'watch' %}" rel="noopener noreferrer"><button class="active">Watches</button></a>
+    <button onclick='dropdown()' style="margin-left: 30px;">Sort by: &#8595;</button>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // Function to sort products
+    function sortProducts(criteria) {
+        const products = Array.from(document.querySelectorAll('.product-card'));
+
+        products.sort((a, b) => {
+            const nameA = a.querySelector('.product-name').textContent.trim();
+            const nameB = b.querySelector('.product-name').textContent.trim();
+            const priceA = parseFloat(a.querySelector('.product-price').textContent.replace('$', ''));
+            const priceB = parseFloat(b.querySelector('.product-price').textContent.replace('$', ''));
+
+            if (criteria === 'price-asc') {
+                return priceA - priceB; // Low to High price
+            } else if (criteria === 'price-desc') {
+                return priceB - priceA; // High to Low price
+            } else if (criteria === 'name-asc') {
+                return nameA.localeCompare(nameB); // A to Z
+            } else if (criteria === 'name-desc') {
+                return nameB.localeCompare(nameA); // Z to A
+            }
+        });
+
+        const productGrid = document.querySelector('.product-grid');
+        productGrid.innerHTML = '';
+
+        products.forEach(product => productGrid.appendChild(product));
+    }
+
+    // Function for the dropdown using SweetAlert2
+    function dropdown() {
+        var inputOptions = {
+            'price-asc': 'Price: Low to High',
+            'price-desc': 'Price: High to Low',
+            'name-asc': 'Product Name: A to Z',
+            'name-desc': 'Product Name: Z to A'
+        };
+
+        Swal.fire({
+            title: 'Choose a sorting option',
+            input: 'select',
+            inputOptions: inputOptions,
+            inputPlaceholder: 'Select an option',
+            showCancelButton: true,
+            inputValidator: (value) => {
+                return new Promise((resolve) => {
+                    if (value) {
+                        resolve();
+                    } else {
+                        resolve('You need to select something!');
+                    }
+                });
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log('Selected sorting option:', result.value);
+                sortProducts(result.value);  // Call the sortProducts function with the selected option
+            }
+        });
+    }
+
+    // Example of attaching dropdown to a button (if you have a button to trigger this)
+    document.querySelector('.sort-button').addEventListener('click', dropdown);
+</script>

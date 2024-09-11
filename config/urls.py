@@ -7,9 +7,10 @@ from django.urls import include
 from django.urls import path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
+from django.shortcuts import  redirect
 
 urlpatterns = [
-    path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
+    path("", lambda x: redirect('home'),),
     path(
         "about/",
         TemplateView.as_view(template_name="pages/about.html"),
@@ -21,6 +22,7 @@ urlpatterns = [
     path("users/", include("e_commerce.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     path("app/", include("e_commerce.app.urls")),
+
     # Your stuff: custom urls includes go here
     # ...
     # Media files

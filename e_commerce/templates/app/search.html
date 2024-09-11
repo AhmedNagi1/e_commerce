@@ -2,18 +2,15 @@
 {% include "app/base.html" %}
 {% load static %}
 {% block head %}
-    <title>Laptop</title>
+    <title>Search</title>
     <link rel="stylesheet" href="{% static "app/css/home.css" %}">
 {% endblock head %}
 {% block contant %}
-    <div class="container">
-        <header>
-            <h1>Laptop</h1>
-            {% include "app/header.html" %}
-        </header>
         {% include "app/navbar.html" %}
+        <h1 style='width: 50%;margin: 12px auto;'>Search: {{query}}</h1>
         <div class="product-grid">
             {% for product in products %}
+            
                 <div class="product-card">
                     <a href="{% url 'detalis' ref=product.ref %}">
                         <img src="{{product.image.url}}" alt="Nike" class="product-image" loading="lazy">
