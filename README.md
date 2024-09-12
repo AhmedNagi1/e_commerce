@@ -4,6 +4,10 @@ Behold My Awesome Project!
 
 License: Apache Software License 2.0
 
+# Welcome to Our E-Commerce Project!
+
+Thank you for checking out our e-commerce project. This platform is designed to provide a seamless online shopping experience. Please note that the project is still a work in progress and requires further modifications and improvements before any commercial use. We appreciate your interest and support!
+
 ## Settings
 
 

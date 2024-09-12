@@ -8,6 +8,8 @@ from django.urls import path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
 from django.shortcuts import  redirect
+from django.conf.urls.i18n import i18n_patterns
+
 
 urlpatterns = [
     path("", lambda x: redirect('home'),),
@@ -19,6 +21,7 @@ urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
+    path('set_language/', include('django.conf.urls.i18n'), name='set_language'),
     path("users/", include("e_commerce.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     path("app/", include("e_commerce.app.urls")),

@@ -2,14 +2,16 @@ from django.shortcuts import render, redirect
 from app.models import * 
 from e_commerce.users.models import User
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def home(request):
     product = Product.objects.all().order_by('?')
     context = {
         "product": product,
     }
     return render(request, 'app/home.html', context)
-
+@login_required
 def laptop(request):
     category = Category.objects.get(id=1)
     context = {
@@ -17,14 +19,14 @@ def laptop(request):
         # "product": product,
     }
     return render(request, 'app/laptop.html', context)
-
+@login_required
 def mobile(request):
     category = Category.objects.get(id=2)
     context = {
         "category": category.products.all(),
     }
     return render(request, 'app/mobile.html', context)
-
+@login_required
 def watch(request):
     category = Category.objects.get(id=3)
     context = {
@@ -32,6 +34,7 @@ def watch(request):
     }
     return render(request, 'app/watch.html', context)
 
+@login_required
 def detalis(request, ref):
     product = Product.objects.get(ref=ref)
     context = {
@@ -40,7 +43,7 @@ def detalis(request, ref):
     return render(request, 'app/detalis.html', context)
 
 
-
+@login_required
 def cart(request):
     user_cart, created = Cart.objects.get_or_create(user=request.user)
     if request.method == 'POST':
@@ -57,7 +60,7 @@ def cart(request):
     }
     return render(request, 'app/cart.html', context=context)
     
-
+@login_required
 def wishlist(request):
     user_wishlist, created = Wishlist.objects.get_or_create(user=request.user)
     if request.method == 'POST':
@@ -76,6 +79,7 @@ def wishlist(request):
     
 
 import json
+@login_required
 def product_buy(request):
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
@@ -88,7 +92,7 @@ def product_buy(request):
 
     return JsonResponse({'message': 'Invalid request method', 'status': 'error'}, status=405)
 
-
+@login_required
 def product_search(request):
 
     query = request.GET.get('q')
@@ -102,6 +106,6 @@ def product_search(request):
     else:
         return JsonResponse({'error': 'No search query provided'}, status=400)
 
-
+@login_required
 def setting(request):
     return render(request, 'app/settings.html')
