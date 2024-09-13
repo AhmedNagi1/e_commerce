@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from app.models import * 
 from e_commerce.users.models import User
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 
 @login_required
@@ -109,3 +109,18 @@ def product_search(request):
 @login_required
 def setting(request):
     return render(request, 'app/settings.html')
+
+
+def dark_mode(request):
+    response = redirect('setting')  # إعادة التوجيه إلى صفحة الإعدادات أو الصفحة المطلوبة
+
+    # التحقق من حالة الكعكة (cookie) الحالية
+    dark_mode_status = request.COOKIES.get('dark_mode', 'False') == 'True'
+    
+    # تبديل حالة الكعكة
+    if dark_mode_status:
+        response.set_cookie('dark_mode', 'False', max_age=3600*24*7*30)  # تعطيل الوضع الداكن
+    else:
+        response.set_cookie('dark_mode', 'True', max_age=3600*24*7*30)  # تفعيل الوضع الداكن
+
+    return response

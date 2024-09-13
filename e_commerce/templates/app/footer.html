@@ -1,6 +1,11 @@
-<nav>
-    <a href="{% url 'home' %}"><button class="active"><span class="material-icons">home</span>Home</button></a>
-    <a href="{% url 'wishlist' %}"><button><span class="material-icons">favorite_border</span>Wishlist</button></a>
-    <a href="{% url 'cart' %}"><button><span class="material-icons">shopping_cart</span>Cart</button></a>
-    <a href="{% url "setting" %}"><button><span class="material-icons">settings</span>Settings</button></a>
-</nav>
+{% load static %}
+<dev class='navp'>
+    <nav>
+        <a href="{% url 'home' %}"><button class="active"><span class="material-icons">home</span>Home</button></a>
+        <a href="{% url 'wishlist' %}"><button><span class="material-icons">favorite_border</span>Wishlist</button></a>
+        <a href="{% url 'cart' %}"><button><span class="material-icons">shopping_cart</span>Cart</button></a>
+        <a href="{% url "setting" %}"><button><span class="material-icons">settings</span>Settings</button></a>
+    </nav>
+</dev>
+
+<script src="{% static "app/js/dark_mode.js" %}"></script>

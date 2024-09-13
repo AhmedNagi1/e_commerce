@@ -13,4 +13,5 @@ urlpatterns = [
     path('product_buy/', views.product_buy, name='product_buy'),
     path('search/', views.product_search, name='product_search'),
     path('setting/', views.setting, name='setting'),
+    path('dark_mode/', views.dark_mode, name='dark_mode'),
 ]

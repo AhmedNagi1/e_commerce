@@ -8,7 +8,7 @@ License: Apache Software License 2.0
 
 Thank you for checking out our e-commerce project. This platform is designed to provide a seamless online shopping experience. Please note that the project is still a work in progress and requires further modifications and improvements before any commercial use. We appreciate your interest and support!
 
-## Settings
+<img src="./e_commerce/app/static/app/image.png" alt="E-Commerce Project Image" width="600" height="300">
 
 
 ## Basic Commands
