@@ -9,9 +9,15 @@ from django.views import defaults as default_views
 from django.views.generic import TemplateView
 from django.shortcuts import  redirect
 from django.conf.urls.i18n import i18n_patterns
+from allauth.account.views import EmailView
 
 
 urlpatterns = [
+    path(
+        'accounts/email/',
+        EmailView.as_view(template_name='account/email.html'),
+        name='account_email'
+    ),
     path("", lambda x: redirect('home'),),
     path(
         "about/",

@@ -1,17 +1,12 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-12 10:00+0000\n"
+"Project-Id-Version: إصدار الحزمة\n"
+"Report-Msgid-Bugs-To: الإبلاغ عن الأخطاء هنا\n"
+"POT-Creation-Date: 2024-12-30 15:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Arabic <LL@li.org>\n"
+"Language-Team: اللغة <LL@li.org>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,112 +14,177 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: e_commerce/templates/allauth/layouts/entrance.html:8
-#: e_commerce/templates/base.html:102
-msgid "Sign In"
-msgstr "تسجيل الدخول"
-
-#: e_commerce/templates/app/settings.html:13
-msgid "Settings"
-msgstr "الإعدادات"
-
-#: e_commerce/templates/app/settings.html:17
-msgid "Account"
-msgstr "الحساب"
-
-#: e_commerce/templates/app/settings.html:19
-msgid "Email management"
-msgstr ""
-
-#: e_commerce/templates/app/settings.html:23
-msgid "Password management"
-msgstr ""
-
-#: e_commerce/templates/app/settings.html:28
-msgid "Preferences"
-msgstr "التفضيلات"
-
-#: e_commerce/templates/app/settings.html:30
-msgid "Notifications"
-msgstr "الإشعارات"
-
-#: e_commerce/templates/app/settings.html:34
-msgid "Language"
-msgstr "اللغة"
-
-#: e_commerce/templates/app/settings.html:39
-msgid "Logout"
-msgstr "تسجيل الخروج"
-
-#: e_commerce/templates/app/settings.html:45
-msgid "Theme"
-msgstr "السمة"
-
-#: e_commerce/templates/app/settings.html:47
-msgid "Dark mode"
-msgstr "الوضع الداكن"
-
-#: e_commerce/templates/app/settings.html:60
-msgid "Change Language"
-msgstr "تغيير اللغة"
-
-#: e_commerce/templates/app/settings.html:63
-msgid "English"
-msgstr "الإنجليزية"
-
-#: e_commerce/templates/app/settings.html:64
+#: config/settings/base.py:35
 msgid "Arabic"
 msgstr "العربية"
 
-#: e_commerce/templates/app/settings.html:67
-msgid "Submit"
-msgstr "إرسال"
+#: config/settings/base.py:36
+msgid "English"
+msgstr "الإنجليزية"
 
-#: e_commerce/templates/base.html:87
-msgid "My Profile"
-msgstr "ملفي الشخصي"
+#: e_commerce/templates/account/email.html:22
+msgid "Email Addresses"
+msgstr "عناوين البريد الإلكتروني"
 
-#: e_commerce/templates/base.html:91
-msgid "Sign Out"
-msgstr "تسجيل الخروج"
+#: e_commerce/templates/account/email.html:24
+msgid "The following email addresses are associated with your account:"
+msgstr "عناوين البريد الإلكتروني التالية مرتبطة بحسابك:"
 
-#: e_commerce/templates/base.html:97
-msgid "Sign Up"
-msgstr "إنشاء حساب"
+#: e_commerce/templates/account/email.html:36
+msgid "Verified"
+msgstr "تم التحقق"
 
-#: e_commerce/users/admin.py:24
-msgid "Personal info"
-msgstr "المعلومات الشخصية"
+#: e_commerce/templates/account/email.html:38
+msgid "Unverified"
+msgstr "لم يتم التحقق"
 
-#: e_commerce/users/admin.py:26
-msgid "Permissions"
-msgstr "الصلاحيات"
+#: e_commerce/templates/account/email.html:41
+msgid "Primary"
+msgstr "رئيسي"
 
-#: e_commerce/users/admin.py:37
-msgid "Important dates"
-msgstr "تواريخ هامة"
+#: e_commerce/templates/account/email.html:48
+msgid "Make Primary"
+msgstr "اجعلها رئيسية"
 
-#: e_commerce/users/apps.py:9
-msgid "Users"
-msgstr "المستخدمين"
+#: e_commerce/templates/account/email.html:49
+msgid "Re-send Verification"
+msgstr "إعادة إرسال التحقق"
 
-#: e_commerce/users/forms.py:23 e_commerce/users/tests/test_forms.py:35
-msgid "This username has already been taken."
-msgstr "اسم المستخدم هذا مأخوذ بالفعل."
+#: e_commerce/templates/account/email.html:50
+msgid "Remove"
+msgstr "إزالة"
 
-#: e_commerce/users/models.py:15
-msgid "Name of User"
-msgstr "اسم المستخدم"
+#: e_commerce/templates/account/email.html:57
+msgid "Change Email Address"
+msgstr "تغيير عنوان البريد الإلكتروني"
 
-#: e_commerce/users/tests/test_views.py:72 e_commerce/users/views.py:25
-msgid "Information successfully updated"
-msgstr "تم تحديث المعلومات بنجاح"
+#: e_commerce/templates/account/email.html:61
+msgid "Email Address"
+msgstr "عنوان البريد الإلكتروني"
 
-#~ msgid "Manage account"
-#~ msgstr "إدارة الحساب"
+#: e_commerce/templates/account/email.html:62
+msgid "Enter new email address"
+msgstr "أدخل عنوان بريد إلكتروني جديد"
 
-#~ msgid "select"
-#~ msgstr "اختر"
+#: e_commerce/templates/account/email.html:65
+msgid "Add Email"
+msgstr "إضافة بريد إلكتروني"
 
-#~ msgid "Select a language"
-#~ msgstr "اختر لغة"
+#: e_commerce/templates/account/email.html:70
+msgid "Change Password"
+msgstr "تغيير كلمة المرور"
+
+#: e_commerce/templates/account/email.html:72
+#: e_commerce/templates/app/detalis.html:9
+msgid "Back"
+msgstr "عودة"
+
+#: e_commerce/templates/app/cart.html:4 e_commerce/templates/app/cart.html:9
+#: e_commerce/templates/app/footer.html:29
+msgid "Cart"
+msgstr "عربة التسوق"
+
+#: e_commerce/templates/app/detalis.html:4
+msgid "Details"
+msgstr "التفاصيل"
+
+#: e_commerce/templates/app/detalis.html:13
+#: e_commerce/templates/app/detalis.html:60
+msgid "Add to Cart"
+msgstr "أضف إلى عربة التسوق"
+
+#: e_commerce/templates/app/detalis.html:17
+msgid "details"
+msgstr "تفاصيل"
+
+#: e_commerce/templates/app/detalis.html:23
+msgid "The Details"
+msgstr "التفاصيل"
+
+#: e_commerce/templates/app/detalis.html:33
+msgid "Delete from WishList"
+msgstr "إزالة من قائمة الرغبات"
+
+#: e_commerce/templates/app/detalis.html:41
+msgid "Add to Wishlist"
+msgstr "إضافة إلى قائمة الرغبات"
+
+#: e_commerce/templates/app/detalis.html:52
+msgid "Delete from Cart"
+msgstr "إزالة من عربة التسوق"
+
+#: e_commerce/templates/app/footer.html:11 e_commerce/templates/app/home.html:4
+#: e_commerce/templates/app/home.html:9
+msgid "Home"
+msgstr "الصفحة الرئيسية"
+
+#: e_commerce/templates/app/footer.html:20
+#: e_commerce/templates/app/wishlist.html:4
+#: e_commerce/templates/app/wishlist.html:9
+msgid "Wishlist"
+msgstr "قائمة الرغبات"
+
+#: e_commerce/templates/app/footer.html:38
+#: e_commerce/templates/app/settings.html:17
+msgid "Settings"
+msgstr "الإعدادات"
+
+#: e_commerce/templates/app/header.html:6
+msgid "Search..."
+msgstr "بحث..."
+
+#: e_commerce/templates/app/header.html:19
+msgid "Search Product"
+msgstr "ابحث عن منتج"
+
+#: e_commerce/templates/app/header.html:26
+msgid "Look up"
+msgstr "ابحث"
+
+#: e_commerce/templates/app/header.html:29
+msgid "Please enter a product name."
+msgstr "يرجى إدخال اسم منتج."
+
+#: e_commerce/templates/app/navbar.html:9
+msgid "menu"
+msgstr "القائمة"
+
+#: e_commerce/templates/app/navbar.html:17
+msgid "All"
+msgstr "الكل"
+
+#: e_commerce/templates/app/navbar.html:33
+msgid "Sort by:"
+msgstr "ترتيب حسب:"
+
+#: e_commerce/templates/app/navbar.html:50
+msgid "Price: Low to High"
+msgstr "السعر: من الأقل إلى الأعلى"
+
+#: e_commerce/templates/app/navbar.html:51
+msgid "Price: High to Low"
+msgstr "السعر: من الأعلى إلى الأقل"
+
+#: e_commerce/templates/app/navbar.html:52
+msgid "Product Name: A to Z"
+msgstr "اسم المنتج: من الألف إلى الياء"
+
+#: e_commerce/templates/app/navbar.html:53
+msgid "Product Name: Z to A"
+msgstr "اسم المنتج: من الياء إلى الألف"
+
+#: e_commerce/templates/app/navbar.html:57
+msgid "Choose a sorting option"
+msgstr "اختر خيار الترتيب"
+
+#: e_commerce/templates/app/navbar.html:60
+msgid "Select an option"
+msgstr "اختر خيارًا"
+
+#: e_commerce/templates/app/navbar.html:67
+msgid "You need to select something!"
+msgstr "عليك اختيار شيء ما!"
+
+#: e_commerce/templates/app/navbar.html:73
+msgid "Selected sorting option:"
+msgstr "خيار الترتيب المحدد:"

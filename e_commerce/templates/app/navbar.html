@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load custom_tags %}
 <nav class="bg-white shadow-lg">
   <div class="container mx-auto px-4 py-3">
@@ -5,7 +6,7 @@
           <!-- زر القائمة المنسدلة للأجهزة الصغيرة -->
           <div class="block lg:hidden">
               <button onclick="toggleMenu()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
-                  <span class="material-icons">menu</span>
+                  <span class="material-icons">{% trans "menu" %}</span>
               </button>
           </div>
 
@@ -13,7 +14,7 @@
           <div id="menu" class="hidden lg:flex lg:items-center lg:space-x-4 w-full lg:w-auto mt-4 lg:mt-0">
               <a href="{% url 'home' %}" rel="noopener noreferrer" class="text-gray-700 hover:text-gray-900 font-semibold transition duration-300 ease-in-out">
                   <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-                      All
+                      {% trans "All" %}
                   </button>
               </a>
               {% get_all_objects as objects %}
@@ -29,7 +30,7 @@
           <!-- زر الفرز -->
           <div class="flex items-center">
               <button onclick="dropdown()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 active:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 ml-4">
-                  Sort by: &#8595;
+                  {% trans "Sort by:" %} &#8595;
               </button>
           </div>
       </div>
@@ -43,73 +44,35 @@
       menu.classList.toggle('hidden');
   }
 
-  // وظيفة الفرز (يمكنك إضافة الوظيفة الخاصة بك هنا)
+  // وظيفة الفرز
   function dropdown() {
-      // قم بتنفيذ وظيفة الفرز هنا
+      var inputOptions = {
+          'price-asc': '{% trans "Price: Low to High" %}',
+          'price-desc': '{% trans "Price: High to Low" %}',
+          'name-asc': '{% trans "Product Name: A to Z" %}',
+          'name-desc': '{% trans "Product Name: Z to A" %}'
+      };
+
+      Swal.fire({
+          title: '{% trans "Choose a sorting option" %}',
+          input: 'select',
+          inputOptions: inputOptions,
+          inputPlaceholder: '{% trans "Select an option" %}',
+          showCancelButton: true,
+          inputValidator: (value) => {
+              return new Promise((resolve) => {
+                  if (value) {
+                      resolve();
+                  } else {
+                      resolve('{% trans "You need to select something!" %}');
+                  }
+              });
+          }
+      }).then((result) => {
+          if (result.isConfirmed) {
+              console.log('{% trans "Selected sorting option:" %}', result.value);
+              sortProducts(result.value);  // Call the sortProducts function with the selected option
+          }
+      });
   }
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    // Function to sort products
-    function sortProducts(criteria) {
-        const products = Array.from(document.querySelectorAll('.product-card'));
-
-        products.sort((a, b) => {
-            const nameA = a.querySelector('.product-name').textContent.trim();
-            const nameB = b.querySelector('.product-name').textContent.trim();
-            const priceA = parseFloat(a.querySelector('.product-price').textContent.replace('$', ''));
-            const priceB = parseFloat(b.querySelector('.product-price').textContent.replace('$', ''));
-
-            if (criteria === 'price-asc') {
-                return priceA - priceB; // Low to High price
-            } else if (criteria === 'price-desc') {
-                return priceB - priceA; // High to Low price
-            } else if (criteria === 'name-asc') {
-                return nameA.localeCompare(nameB); // A to Z
-            } else if (criteria === 'name-desc') {
-                return nameB.localeCompare(nameA); // Z to A
-            }
-        });
-
-        const productGrid = document.querySelector('.product-grid');
-        productGrid.innerHTML = '';
-
-        products.forEach(product => productGrid.appendChild(product));
-    }
-
-    // Function for the dropdown using SweetAlert2
-    function dropdown() {
-        var inputOptions = {
-            'price-asc': 'Price: Low to High',
-            'price-desc': 'Price: High to Low',
-            'name-asc': 'Product Name: A to Z',
-            'name-desc': 'Product Name: Z to A'
-        };
-
-        Swal.fire({
-            title: 'Choose a sorting option',
-            input: 'select',
-            inputOptions: inputOptions,
-            inputPlaceholder: 'Select an option',
-            showCancelButton: true,
-            inputValidator: (value) => {
-                return new Promise((resolve) => {
-                    if (value) {
-                        resolve();
-                    } else {
-                        resolve('You need to select something!');
-                    }
-                });
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                console.log('Selected sorting option:', result.value);
-                sortProducts(result.value);  // Call the sortProducts function with the selected option
-            }
-        });
-    }
-
-    // Example of attaching dropdown to a button (if you have a button to trigger this)
-    document.querySelector('.sort-button').addEventListener('click', dropdown);
 </script>

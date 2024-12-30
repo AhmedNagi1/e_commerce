@@ -1,21 +1,41 @@
+{% load i18n %}
 <div class="bg-white shadow-lg fixed bottom-0 w-full z-50">
-    <nav class="container mx-auto px-4 py-2 flex justify-around">
-        <a href="{% url 'home' %}" class="flex flex-col items-center text-gray-700 hover:text-blue-500 transition duration-300 ease-in-out">
-            <span class="material-icons">home</span>
-            <span class="text-sm">Home</span>
-        </a>
-        <a href="{% url 'wishlist' %}" class="flex flex-col items-center text-gray-700 hover:text-blue-500 transition duration-300 ease-in-out">
-            <span class="material-icons">favorite_border</span>
-            <span class="text-sm">Wishlist</span>
-        </a>
-        <a href="{% url 'cart' %}" class="flex flex-col items-center text-gray-700 hover:text-blue-500 transition duration-300 ease-in-out">
-            <span class="material-icons">shopping_cart</span>
-            <span class="text-sm">Cart</span>
-        </a>
-        <a href="{% url 'setting' %}" class="flex flex-col items-center text-gray-700 hover:text-blue-500 transition duration-300 ease-in-out">
-            <span class="material-icons">settings</span>
-            <span class="text-sm">Settings</span>
-        </a>
-    </nav>
+  <nav class="container mx-auto px-4 py-2 flex justify-around">
+      <a href="{% url 'home' %}" class="flex flex-col items-center text-gray-700 hover:text-blue-500 transition duration-300 ease-in-out">
+          <div class="w-6 h-6 flex items-center justify-center">
+              <!-- أيقونة "الصفحة الرئيسية" كـ SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 9.75L12 4.5l9 5.25M12 4.5v15m-9-9.75h18"></path>
+              </svg>
+          </div>
+          <span class="text-sm">{% trans "Home" %}</span>
+      </a>
+      <a href="{% url 'wishlist' %}" class="flex flex-col items-center text-gray-700 hover:text-blue-500 transition duration-300 ease-in-out">
+          <div class="w-6 h-6 flex items-center justify-center">
+              <!-- أيقونة "المفضلة" كـ SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 20.25L3.75 12.75C2.5625 11.5625 2.5625 9.4375 3.75 8.25C4.9375 7.0625 7.0625 7.0625 8.25 8.25L11.25 11.25L14.25 8.25C15.4375 7.0625 17.5625 7.0625 18.75 8.25C19.9375 9.4375 19.9375 11.5625 18.75 12.75L11.25 20.25Z"></path>
+              </svg>
+          </div>
+          <span class="text-sm">{% trans "Wishlist" %}</span>
+      </a>
+      <a href="{% url 'cart' %}" class="flex flex-col items-center text-gray-700 hover:text-blue-500 transition duration-300 ease-in-out">
+          <div class="w-6 h-6 flex items-center justify-center">
+              <!-- أيقونة "السلة" كـ SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 3.375h17.25l-1.5 12.75H4.875L3.375 3.375zm6.375 14.25a2.25 2.25 0 114.5 0m0 0a2.25 2.25 0 104.5 0"></path>
+              </svg>
+          </div>
+          <span class="text-sm">{% trans "Cart" %}</span>
+      </a>
+      <a href="{% url 'setting' %}" class="flex flex-col items-center text-gray-700 hover:text-blue-500 transition duration-300 ease-in-out">
+          <div class="w-6 h-6 flex items-center justify-center">
+              <!-- أيقونة "الإعدادات" كـ SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v3m0 12v3m9-9h-3M6 12H3m12 0a6 6 0 11-12 0 6 6 0 0112 0z"></path>
+              </svg>
+          </div>
+          <span class="text-sm">{% trans "Settings" %}</span>
+      </a>
+  </nav>
 </div>
-

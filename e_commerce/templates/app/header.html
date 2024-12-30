@@ -1,10 +1,9 @@
-<!-- search.html -->
-
+{% load i18n %}
 <div class="flex items-center justify-center">
   <div class="relative w-full max-w-md">
       <input
           type="text"
-          placeholder="Search..."
+          placeholder="{% trans 'Search...' %}"
           readonly
           onclick="searchProduct()"
           class="w-full px-4 py-2 pl-10 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 ease-in-out"
@@ -17,18 +16,17 @@
 <script>
   function searchProduct() {
     Swal.fire({
-        title: "Search Product",
+        title: "{% trans 'Search Product' %}",
         input: "text",
         inputAttributes: {
             autocapitalize: "off"
         },
         showCancelButton: true,
         showLoaderOnConfirm: true,
-        confirmButtonText: "Look up",
-        showLoaderOnConfirm: true,
+        confirmButtonText: "{% trans 'Look up' %}",
         preConfirm: (productName) => {
             if (!productName) {
-                Swal.showValidationMessage('Please enter a product name.');
+                Swal.showValidationMessage('{% trans "Please enter a product name." %}');
                 return;
             }
             // URL for search, replace 'product_search' with the correct URL if necessary
@@ -40,5 +38,4 @@
         allowOutsideClick: () => !Swal.isLoading()
     });
 }
-
 </script>
