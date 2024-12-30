@@ -27,42 +27,58 @@ def products(request, slug):
 @login_required
 def detalis(request, ref):
     product = Product.objects.get(ref=ref)
+    user = request.user
+
+    if request.method == "POST":
+        method = request.POST.get("method")
+        action_type = "wishlist" if "wishlist" in request.POST else "cart"
+        model_mapping = {
+            "wishlist": Wishlist,
+            "cart": Cart,
+        }
+
+        Model = model_mapping[action_type]
+        obj, created = Model.objects.get_or_create(user=user)
+
+        if method.lower() == "post":
+            obj.products.add(product)
+        elif method.lower() == "delete":
+            obj.products.remove(product)
+
+
+    # Check if the product is in the user's cart
+    is_cart = Cart.objects.filter(user=user, products=product).exists()
+
+    # Check if the product is in the user's wishlist
+    is_wishlist = Wishlist.objects.filter(user=user, products=product).exists()
+
     context = {
         "product": product,
+        "is_cart": is_cart,
+        "is_wishlist": is_wishlist,
     }
     return render(request, 'app/detalis.html', context)
 
 
 @login_required
 def cart(request):
-    user_cart, created = Cart.objects.get_or_create(user=request.user)
-    if request.method == 'POST':
-        prodect_ref = request.POST.get("cart")
-        prodect = Product.objects.get(ref=prodect_ref)
-        user_cart.products.add(prodect)
-        return redirect('cart')
+    user_cart = Cart.objects.get(user=request.user)
 
     products = user_cart.products.all()
 
     context = {
-        'prodect': user_cart,
         'products': products
     }
     return render(request, 'app/cart.html', context=context)
 
+
 @login_required
 def wishlist(request):
-    user_wishlist, created = Wishlist.objects.get_or_create(user=request.user)
-    if request.method == 'POST':
-        prodect_ref = request.POST.get("wishlist")
-        prodect = Product.objects.get(ref=prodect_ref)
-        user_wishlist.products.add(prodect)
-        return redirect('wishlist')
+    user_wishlist= Wishlist.objects.get(user=request.user)
 
     products = user_wishlist.products.all()
 
     context = {
-        'prodect': user_wishlist,
         'products': products
     }
     return render(request, 'app/wishlist.html', context=context)

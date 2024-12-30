@@ -23,25 +23,45 @@
                     <p class="text-gray-600 leading-relaxed">{{product.description}}</p>
                 </div>
 
-                <form method="post" action="{% url 'wishlist' %}" class="mb-4">
+                {% if is_wishlist %}
+                <form method="post" class="mb-4">
+                    <input type="hidden" name="method" value="DELETE"> <!-- لتحديد الميثود -->
+                    <input type="text" name="wishlist" hidden>
                     {% csrf_token %}
-                    <button name="wishlist" value="{{product.ref}}" class="w-full bg-gray-500 hover:bg-gray-600 text-white py-3 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
-                        Add to Wishlist
+                    <button name="delete" value="{{product.ref}}" class="w-full bg-red-500 hover:bg-red-600 text-white py-3 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
+                      Delete from WishList
                     </button>
                 </form>
+              {% else %}
+                <form method="post" class="mb-4">
+                    <input type="hidden" name="method" value="POST"> <!-- لتحديد الميثود -->
+                    {% csrf_token %}
+                    <button name="wishlist" value="{{product.ref}}" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
+                      Add to Wishlist
+                    </button>
 
-                <form method="post" action="{% url 'cart' %}" class="mb-4">
+                </form>
+              {% endif %}
+
+              {% if is_cart %}
+                <form method="post" class="mb-4">
+                    <input type="hidden" name="method" value="DELETE">
+                    <input type="text" name="cart" hidden>
+                    {% csrf_token %}
+                    <button name="cart-delete" value="{{product.ref}}" class="w-full bg-red-500 hover:bg-red-600 text-white py-3 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
+                      Delete from Cart
+                    </button>
+                </form>
+              {% else %}
+                <form method="post" class="mb-4">
+                    <input type="hidden" name="method" value="POST">
                     {% csrf_token %}
                     <button name="cart" value="{{product.ref}}" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
                         Add to Cart
                     </button>
                 </form>
+              {% endif %}
 
-                <div class="buttons buy">
-                    <button name="buy" value="{{product.ref}}" onclick="confirmPurchase()" class="w-full bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
-                        Buy Now
-                    </button>
-                </div>
             </div>
         </div>
     </div>
