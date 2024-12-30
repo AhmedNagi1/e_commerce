@@ -3,6 +3,7 @@ from app.models import *
 from e_commerce.users.models import User
 from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 @login_required
 def home(request):
@@ -67,7 +68,8 @@ def cart(request):
     products = user_cart.products.all()
 
     context = {
-        'products': products
+        'products': products,
+        'cart': user_cart
     }
     return render(request, 'app/cart.html', context=context)
 
@@ -100,17 +102,16 @@ def product_buy(request):
 
 @login_required
 def product_search(request):
-
     query = request.GET.get('q')
 
     if query:
-        results = Product.objects.filter(name__icontains=query)
-        print("#"*100)
-        print(len(results))
-        print("#"*100)
+        results = Product.objects.filter(
+        Q(name__icontains=query)
+    )
         return render(request, 'app/search.html', {'query': query, 'products': results})
     else:
         return JsonResponse({'error': 'No search query provided'}, status=400)
+
 
 @login_required
 def setting(request):

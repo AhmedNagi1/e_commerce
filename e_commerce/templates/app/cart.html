@@ -7,10 +7,7 @@
     <div class="container mx-auto px-4 py-8">
         <header class="text-center mb-8">
             <h1 class="text-4xl font-bold text-gray-900">{% trans "Cart" %}</h1>
-            {% include "app/header.html" %}
         </header>
-
-        {% include "app/navbar.html" %}
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-6">
             {% for product in products %}
@@ -26,8 +23,53 @@
             {% endfor %}
         </div>
 
-        {% include "app/footer.html" %}
-    </div>
+          <!-- Button to show the invoice -->
+          <button id="showInvoiceBtn" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600">
+            {% trans 'Show Invoice' %}
+        </button>
+
+        <!-- Invoice window (hidden by default) -->
+        <div id="invoiceWindow" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+          <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+              <!-- Close button (X) -->
+              <button id="closeInvoiceBtn" class="absolute top-2 left-2 text-gray-500 hover:text-gray-700">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+              </button>
+              <div class="flex justify-center"> <!-- تمت إضافة justify-center هنا -->
+                  <!-- First half for text -->
+                  <div class="w-1/2 text-center"> <!-- تمت إضافة text-center هنا -->
+                      <h2 class="text-xl font-bold mb-4">{% trans 'Purchase Invoice' %}</h2>
+                      <ul id="productList" class="space-y-2">
+                        {% for product in products %}
+                            <li class="flex justify-between">
+                                <span>{{ product.name }}</span>
+                                <span>{{ product.price }}$</span>
+                            </li>
+                        {% endfor %}
+                      </ul>
+                      <p class="text-lg font-semibold mt-4">{% trans 'Total:' %} <span id="totalAmount">{{cart.total_price}}</span> $</p>
+                      <button id="payBtn" class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg mt-4 hover:bg-blue-600">
+                          {% trans 'Pay Now' %}
+                      </button>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+    <script>
+      // Show the invoice window when the button is clicked
+      document.getElementById('showInvoiceBtn').addEventListener('click', function() {
+          document.getElementById('invoiceWindow').classList.remove('hidden');
+      });
+
+      // Hide the invoice window when the close button (X) is clicked
+      document.getElementById('closeInvoiceBtn').addEventListener('click', function() {
+          document.getElementById('invoiceWindow').classList.add('hidden');
+      });
+
+    </script>
 
     <script>
         document.querySelectorAll('.categories button').forEach(button => {

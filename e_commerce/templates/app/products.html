@@ -12,10 +12,12 @@
 
         {% include "app/navbar.html" %}
 
-        <!-- قسم المنتجات مع تمكين التمرير -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 overflow-y-auto" style="max-height: 70vh;">
+        <!-- قسم المنتجات -->
+        <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-5 gap-6">
             {% for i in category %}
-                <div class="product-card bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105">
+                <div class="product-card bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl"
+                data-price="{{ i.price }}"
+                data-name="{{ i.name }}">
                     <a href="{% url 'detalis' ref=i.ref %}" class="block">
                         {% if i.image %}
                             <img src="{{ i.image.url }}" alt="{% trans i.name %}" class="w-full h-48 object-cover" loading="lazy">
@@ -33,9 +35,11 @@
     </div>
 
     <script>
+        // تفعيل أزرار التفاعل في الشريط الجانبي
         document.querySelectorAll('.categories button').forEach(button => {
             button.addEventListener('click', function() {
-                document.querySelector('.categories button.active').classList.remove('active');
+                const activeButton = document.querySelector('.categories button.active');
+                if (activeButton) activeButton.classList.remove('active');
                 this.classList.add('active');
             });
         });

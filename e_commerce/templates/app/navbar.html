@@ -44,7 +44,30 @@
       menu.classList.toggle('hidden');
   }
 
+
   // وظيفة الفرز
+  function sortProducts(option) {
+    const grid = document.getElementById('product-grid'); // حدد العنصر الذي يحتوي على المنتجات
+    const cards = Array.from(grid.getElementsByClassName('product-card')); // اجمع جميع العناصر التي تمثل المنتجات
+
+    // قم بفرز المنتجات بناءً على الخيار المحدد
+    cards.sort((a, b) => {
+        if (option === 'price-asc') {
+            return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+        } else if (option === 'price-desc') {
+            return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
+        } else if (option === 'name-asc') {
+            return a.dataset.name.localeCompare(b.dataset.name);
+        } else if (option === 'name-desc') {
+            return b.dataset.name.localeCompare(a.dataset.name);
+        }
+    });
+
+    // إعادة ترتيب المنتجات في الشبكة
+    grid.innerHTML = ''; // احذف جميع المنتجات
+    cards.forEach(card => grid.appendChild(card)); // أعد إضافتها بترتيب جديد
+}
+
   function dropdown() {
       var inputOptions = {
           'price-asc': '{% trans "Price: Low to High" %}',

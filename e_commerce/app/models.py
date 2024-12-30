@@ -35,6 +35,10 @@ class Cart(models.Model):
     products = models.ManyToManyField(Product, related_name='carts')
     created_at = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def total_price(self):
+        return sum(product.price for product in self.products.all())
+
     def __str__(self):
         return f"Cart of {self.user.username}"
 
