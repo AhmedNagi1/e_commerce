@@ -272,9 +272,7 @@ tags
 dump.rdb
 
 ### Project template
-e_commerce/media/
+# e_commerce/media/
 
 .pytest_cache/
 .ipython/
-.env
-.envs/*

@@ -1,11 +1,54 @@
-<div class="categories">
+{% load custom_tags %}
+<nav class="bg-white shadow-lg">
+  <div class="container mx-auto px-4 py-3">
+      <div class="categories flex flex-wrap items-center justify-between">
+          <!-- زر القائمة المنسدلة للأجهزة الصغيرة -->
+          <div class="block lg:hidden">
+              <button onclick="toggleMenu()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
+                  <span class="material-icons">menu</span>
+              </button>
+          </div>
 
-    <a href="{% url 'home' %}" rel="noopener noreferrer" style="text-decoration: none;"><button class="active">All</button></a>
-    <a href="{% url 'laptop' %}" rel="noopener noreferrer"><button class="active">Laptop</button></a>
-    <a href="{% url 'mobile' %}" rel="noopener noreferrer"><button class="active">Mobile devices</button></a>
-    <a href="{% url 'watch' %}" rel="noopener noreferrer"><button class="active">Watches</button></a>
-    <button onclick='dropdown()' style="margin-left: 30px;">Sort by: &#8595;</button>
-</div>
+          <!-- العناصر الرئيسية -->
+          <div id="menu" class="hidden lg:flex lg:items-center lg:space-x-4 w-full lg:w-auto mt-4 lg:mt-0">
+              <a href="{% url 'home' %}" rel="noopener noreferrer" class="text-gray-700 hover:text-gray-900 font-semibold transition duration-300 ease-in-out">
+                  <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                      All
+                  </button>
+              </a>
+              {% get_all_objects as objects %}
+              {% for obj in objects %}
+              <a href="{% url 'products' obj.slug %}" rel="noopener noreferrer" class="text-gray-700 hover:text-gray-900 font-semibold transition duration-300 ease-in-out">
+                  <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 active:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
+                      {{ obj.name }}
+                  </button>
+              </a>
+              {% endfor %}
+          </div>
+
+          <!-- زر الفرز -->
+          <div class="flex items-center">
+              <button onclick="dropdown()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 active:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 ml-4">
+                  Sort by: &#8595;
+              </button>
+          </div>
+      </div>
+  </div>
+</nav>
+
+<script>
+  // وظيفة لإظهار/إخفاء القائمة المنسدلة
+  function toggleMenu() {
+      const menu = document.getElementById('menu');
+      menu.classList.toggle('hidden');
+  }
+
+  // وظيفة الفرز (يمكنك إضافة الوظيفة الخاصة بك هنا)
+  function dropdown() {
+      // قم بتنفيذ وظيفة الفرز هنا
+  }
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     // Function to sort products

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from app.models import * 
+from app.models import *
 from e_commerce.users.models import User
 from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -7,32 +7,22 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def home(request):
     product = Product.objects.all().order_by('?')
+    category =  Category.objects.all().only('name')
     context = {
         "product": product,
+        "category": category,
+
     }
     return render(request, 'app/home.html', context)
+
 @login_required
-def laptop(request):
-    category = Category.objects.get(id=1)
+def products(request, slug):
+    category = Category.objects.get(slug=slug)
     context = {
-        "category": category.products.all(),
-        # "product": product,
-    }
-    return render(request, 'app/laptop.html', context)
-@login_required
-def mobile(request):
-    category = Category.objects.get(id=2)
-    context = {
+        "name": category,
         "category": category.products.all(),
     }
-    return render(request, 'app/mobile.html', context)
-@login_required
-def watch(request):
-    category = Category.objects.get(id=3)
-    context = {
-        "category": category.products.all(),
-    }
-    return render(request, 'app/watch.html', context)
+    return render(request, 'app/products.html', context)
 
 @login_required
 def detalis(request, ref):
@@ -51,15 +41,15 @@ def cart(request):
         prodect = Product.objects.get(ref=prodect_ref)
         user_cart.products.add(prodect)
         return redirect('cart')
-    
+
     products = user_cart.products.all()
-    
+
     context = {
         'prodect': user_cart,
         'products': products
     }
     return render(request, 'app/cart.html', context=context)
-    
+
 @login_required
 def wishlist(request):
     user_wishlist, created = Wishlist.objects.get_or_create(user=request.user)
@@ -68,15 +58,15 @@ def wishlist(request):
         prodect = Product.objects.get(ref=prodect_ref)
         user_wishlist.products.add(prodect)
         return redirect('wishlist')
-    
+
     products = user_wishlist.products.all()
-    
+
     context = {
         'prodect': user_wishlist,
         'products': products
     }
     return render(request, 'app/wishlist.html', context=context)
-    
+
 
 import json
 @login_required
@@ -84,10 +74,10 @@ def product_buy(request):
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
         buy = data['buy']
-        
+
         if True: #Your code to check
             return JsonResponse({'message': 'Product purchased successfully!', 'status': 'success'})
-        else: 
+        else:
             return JsonResponse({'message': 'Invalid JSON', 'status': 'error'}, status=400)
 
     return JsonResponse({'message': 'Invalid request method', 'status': 'error'}, status=405)
@@ -116,7 +106,7 @@ def dark_mode(request):
 
     # التحقق من حالة الكعكة (cookie) الحالية
     dark_mode_status = request.COOKIES.get('dark_mode', 'False') == 'True'
-    
+
     # تبديل حالة الكعكة
     if dark_mode_status:
         response.set_cookie('dark_mode', 'False', max_age=3600*24*7*30)  # تعطيل الوضع الداكن

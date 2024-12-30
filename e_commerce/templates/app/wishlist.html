@@ -1,33 +1,33 @@
-
 {% include "app/base.html" %}
-{% load static %}
 {% block head %}
-    <title>Laptop</title>
-    <link rel="stylesheet" href="{% static "app/css/home.css" %}">
+    <title>Wishlist</title>
 {% endblock head %}
 {% block contant %}
-    <div class="container">
-        {{ request.path|slice:'5:-1' }}
-        <header>
-            <h1>Laptop</h1>
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-900">Wishlist</h1>
             {% include "app/header.html" %}
         </header>
+
         {% include "app/navbar.html" %}
-        <div class="product-grid">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {% for product in products %}
-                <div class="product-card">
-                    <a href="{% url 'detalis' ref=product.ref %}">
-                        <img src="{{product.image.url}}" alt="Nike" class="product-image" loading="lazy">
-                        <div class="product-info">
-                            <h3 class="product-name">{{product.name}}</h3>
-                            <p class="product-price">${{product.price}}</p>
+                <div class="product-card bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105">
+                    <a href="{% url 'detalis' ref=product.ref %}" class="block">
+                        <img src="{{product.image.url}}" alt="{{product.name}}" class="w-full h-48 object-cover" loading="lazy">
+                        <div class="p-4">
+                            <h3 class="product-name text-xl font-semibold text-gray-900 mb-2">{{product.name}}</h3>
+                            <p class="product-price text-lg text-gray-700 font-bold">${{product.price}}</p>
                         </div>
                     </a>
                 </div>
             {% endfor %}
         </div>
+
         {% include "app/footer.html" %}
     </div>
+
     <script>
         document.querySelectorAll('.categories button').forEach(button => {
             button.addEventListener('click', function() {
@@ -35,7 +35,5 @@
                 this.classList.add('active');
             });
         });
-        
-
     </script>
 {% endblock contant %}

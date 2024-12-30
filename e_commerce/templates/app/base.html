@@ -2,15 +2,23 @@
 {% load static %}
 <html lang="en">
 <head>
-    {% block head %}  
+    {% block head %}
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <title>{% block title %}My Site{% endblock title %}</title>
+        {% comment %} <link rel="stylesheet" href="{% static 'app/css/styles.css' %}"> {% endcomment %}
     {% endblock head %}
 </head>
-<body>
-    {% block contant %}
-    {% endblock contant %}
+<body class="bg-gray-100 text-gray-800">
 
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        {% block contant %}
+        {% endblock contant %}
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </body>
 </html>

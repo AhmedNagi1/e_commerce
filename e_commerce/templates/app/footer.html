@@ -1,11 +1,21 @@
-{% load static %}
-<dev class='navp'>
-    <nav>
-        <a href="{% url 'home' %}"><button class="active"><span class="material-icons">home</span>Home</button></a>
-        <a href="{% url 'wishlist' %}"><button><span class="material-icons">favorite_border</span>Wishlist</button></a>
-        <a href="{% url 'cart' %}"><button><span class="material-icons">shopping_cart</span>Cart</button></a>
-        <a href="{% url "setting" %}"><button><span class="material-icons">settings</span>Settings</button></a>
+<div class="bg-white shadow-lg fixed bottom-0 w-full z-50">
+    <nav class="container mx-auto px-4 py-2 flex justify-around">
+        <a href="{% url 'home' %}" class="flex flex-col items-center text-gray-700 hover:text-blue-500 transition duration-300 ease-in-out">
+            <span class="material-icons">home</span>
+            <span class="text-sm">Home</span>
+        </a>
+        <a href="{% url 'wishlist' %}" class="flex flex-col items-center text-gray-700 hover:text-blue-500 transition duration-300 ease-in-out">
+            <span class="material-icons">favorite_border</span>
+            <span class="text-sm">Wishlist</span>
+        </a>
+        <a href="{% url 'cart' %}" class="flex flex-col items-center text-gray-700 hover:text-blue-500 transition duration-300 ease-in-out">
+            <span class="material-icons">shopping_cart</span>
+            <span class="text-sm">Cart</span>
+        </a>
+        <a href="{% url 'setting' %}" class="flex flex-col items-center text-gray-700 hover:text-blue-500 transition duration-300 ease-in-out">
+            <span class="material-icons">settings</span>
+            <span class="text-sm">Settings</span>
+        </a>
     </nav>
-</dev>
+</div>
 
-<script src="{% static "app/js/dark_mode.js" %}"></script>

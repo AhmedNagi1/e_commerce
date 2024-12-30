@@ -34,12 +34,12 @@
                 <span>{% trans "Language" %}</span>
                 <i class="fas fa-chevron-right"></i>
             </div>
-            
+
             <div class="item" onclick="window.location.href='{% url "account_logout" %}'">
                 <span>{% trans "Logout" %}</span>
                 <i class="fas fa-chevron-right"></i>
             </div>
-        
+
         </div>
         <div class="section">
             <h2>{% trans "Theme" %}</h2>
@@ -59,7 +59,7 @@
               const cookies = document.cookie.split(';');
               for (let i = 0; i < cookies.length; i++) {
                   const cookie = cookies[i].trim();
-                  
+
                   if (cookie.substring(0, name.length + 1) === (name + '=')) {
                       cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                       break;
@@ -69,32 +69,32 @@
           return cookieValue;
         }
 
-        
+
         const darkModeCookies = getCookie('dark_mode');
 
-        
+
         if (darkModeCookies === 'True') {
           const toggleSwitch = document.querySelector('.toggle-switch');
           toggleSwitch.classList.add('active');
-          document.body.classList.add('dark-mode'); 
+          document.body.classList.add('dark-mode');
         }
 
-        
+
         document.querySelector('.toggle-switch').addEventListener('click', function() {
           this.classList.toggle('active');
-          
-          
+
+
           if (this.classList.contains('active')) {
-              document.body.classList.add('dark-mode'); 
+              document.body.classList.add('dark-mode');
           } else {
               document.body.classList.remove('dark-mode');
           }
-          
-    
+
+
           document.getElementById("darkModeForm").submit();
         });
 
-    
+
 
         document.getElementById('change-lang').addEventListener('click', function() {
             Swal.fire({
@@ -138,5 +138,4 @@
             });
         });
     </script>
-    <script src="{% static "app/js/dark_mode.js" %}"></script>
 {% endblock %}

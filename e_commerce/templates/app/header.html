@@ -1,8 +1,18 @@
 <!-- search.html -->
 
-<div class="search-bar">
-    <input type="text" placeholder="Search..." readonly onclick="searchProduct()">
-    <button><span class="material-icons">search</span></button>
+<div class="flex items-center justify-center">
+  <div class="relative w-full max-w-md">
+      <input
+          type="text"
+          placeholder="Search..."
+          readonly
+          onclick="searchProduct()"
+          class="w-full px-4 py-2 pl-10 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 ease-in-out"
+      />
+      <button class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 hover:text-blue-500 transition duration-300 ease-in-out">
+          <span class="material-icons">search</span>
+      </button>
+  </div>
 </div>
 <script>
   function searchProduct() {
@@ -23,7 +33,7 @@
             }
             // URL for search, replace 'product_search' with the correct URL if necessary
             const searchUrl = `{% url 'product_search' %}?q=${encodeURIComponent(productName)}`;
-            
+
             // Redirect to the search URL with the query
             window.location.href = searchUrl;
         },

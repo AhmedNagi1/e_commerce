@@ -1,0 +1,120 @@
+{% load static %}
+{% load allauth i18n %}
+{% block head_title %}
+    <meta charset="UTF-8" />
+    <meta name="theme-color" content="#317EFB" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="{% static 'account/css/email.css' %}">
+{% endblock head_title %}
+{% block content %}
+    <div class="container">
+      {% if messages %}
+<div class="messages-container" id="messagesContainer">
+    {% for message in messages %}
+    <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+        {{ message }}
+        <button class="close-btn">&times;</button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+        <h1>{% trans "Email Addresses" %}</h1>
+        {% if emailaddresses %}
+            <p class="intro-text">{% trans 'The following email addresses are associated with your account:' %}</p>
+            {% url 'account_email' as email_url %}
+            <form action="{{ email_url }}" method="post" class="email-form">
+                {% csrf_token %}
+                {% for radio in emailaddress_radios %}
+                    {% with emailaddress=radio.emailaddress %}
+                        <div class="email-item">
+                            <input type="radio" name="email" value="{{ emailaddress.email }}" id="{{ radio.id }}" {% if radio.checked %}checked{% endif %}>
+                            <label for="{{ radio.id }}" class="email-label">
+                                {{ emailaddress.email }}
+                                {% if emailaddress.verified %}
+                                    <span class="badge success">{% translate "Verified" %}</span>
+                                {% else %}
+                                    <span class="badge warning">{% translate "Unverified" %}</span>
+                                {% endif %}
+                                {% if emailaddress.primary %}
+                                    <span class="badge primary">{% translate "Primary" %}</span>
+                                {% endif %}
+                            </label>
+                        </div>
+                    {% endwith %}
+                {% endfor %}
+                <div class="button-group">
+                    <button type="submit" name="action_primary" class="btn primary">{% trans 'Make Primary' %}</button>
+                    <button type="submit" name="action_send" class="btn secondary">{% trans 'Re-send Verification' %}</button>
+                    <button type="submit" name="action_remove" class="btn danger">{% trans 'Remove' %}</button>
+                </div>
+            </form>
+        {% else %}
+            {% include "account/snippets/warn_no_email.html" %}
+        {% endif %}
+        {% if can_add_email %}
+        <h2>{% trans "Add Email Address" %}</h2>
+        <form action="{{ email_url }}" method="post" class="add-email-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="email">{% trans "Email Address" %}</label>
+                <input type="email" name="email" id="email" placeholder="{% trans 'Enter new email address' %}" required>
+            </div>
+            <button type="submit" name="action_add" class="btn primary">{% trans "Add Email" %}</button>
+          </form>
+          {% endif %}
+          <button type="submit" name="action_add" class="btn primary" onclick="window.location.href='{% url "account_change_password" %}'">{% trans "Change Password" %}</button>
+          <br>
+          <button type="submit" name="action_add" class="btn primary" style="margin-top: 10px;" onclick="window.location.href='{% url "account_login" %}'">{% trans "Back" %}</button>
+    </div>
+{% endblock content %}
+{% block extra_body %}
+    <script>
+    (function() {
+      var message = "{% trans 'Do you really want to remove the selected email address?' %}";
+      var actions = document.getElementsByName('action_remove');
+      if (actions.length) {
+        actions[0].addEventListener("click", function(e) {
+          if (! confirm(message)) {
+            e.preventDefault();
+          }
+        });
+      }
+    })();
+    document.addEventListener('DOMContentLoaded', function() {
+      const messagesContainer = document.getElementById('messagesContainer');
+      if (!messagesContainer) return;
+
+      // Function to remove a message
+      function removeMessage(messageElement) {
+          messageElement.style.opacity = '0';
+          messageElement.style.transform = 'translateX(100%)';
+          setTimeout(() => {
+              messageElement.remove();
+              if (messagesContainer.children.length === 0) {
+                  messagesContainer.remove();
+              }
+          }, 300);
+      }
+
+      // Add click event listeners to close buttons
+      messagesContainer.addEventListener('click', function(event) {
+          if (event.target.classList.contains('close-btn')) {
+              const message = event.target.closest('.message');
+              if (message) {
+                  removeMessage(message);
+              }
+          }
+      });
+
+      // Auto-hide messages after 5 seconds
+      const messages = messagesContainer.querySelectorAll('.message');
+      messages.forEach((message, index) => {
+          setTimeout(() => {
+              if (message.parentNode) {  // Check if the message is still in the DOM
+                  removeMessage(message);
+              }
+          }, 5000 + (index * 500));  // Stagger the removal of messages
+      });
+  });
+    </script>
+{% endblock extra_body %}

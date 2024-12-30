@@ -2,10 +2,17 @@ from django.db import models
 import random
 import uuid
 from e_commerce.users.models import User
+from django.utils.text import slugify
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
+    slug = models.SlugField(unique=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -22,6 +29,7 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+
 class Cart(models.Model):
     user = models.ForeignKey(User, related_name='cart', on_delete=models.CASCADE)
     products = models.ManyToManyField(Product, related_name='carts')
@@ -37,8 +45,8 @@ class Wishlist(models.Model):
 
     def __str__(self):
         return f"Wishlist of {self.user.username}"
-    
-    
+
+
 class ProdectBuy(models.Model):
     user = models.ForeignKey(User, related_name='buy', on_delete=models.CASCADE)
     products = models.ManyToManyField(Product, related_name='buy')
