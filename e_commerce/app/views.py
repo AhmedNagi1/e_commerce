@@ -7,17 +7,35 @@ from django.db.models import Q
 
 @login_required
 def home(request):
+    """
+    Render the home page with all products and categories.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered home page.
+    """
     product = Product.objects.all().order_by('?')
-    category =  Category.objects.all().only('name')
+    category = Category.objects.all().only('name')
     context = {
         "product": product,
         "category": category,
-
     }
     return render(request, 'app/home.html', context)
 
 @login_required
 def products(request, slug):
+    """
+    Render the products page for a specific category.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        slug (str): The slug of the category.
+
+    Returns:
+        HttpResponse: The rendered products page.
+    """
     category = Category.objects.get(slug=slug)
     context = {
         "name": category,
@@ -27,6 +45,16 @@ def products(request, slug):
 
 @login_required
 def detalis(request, ref):
+    """
+    Render the details page for a specific product and handle wishlist/cart actions.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        ref (str): The reference of the product.
+
+    Returns:
+        HttpResponse: The rendered details page.
+    """
     product = Product.objects.get(ref=ref)
     user = request.user
 
@@ -46,11 +74,7 @@ def detalis(request, ref):
         elif method.lower() == "delete":
             obj.products.remove(product)
 
-
-    # Check if the product is in the user's cart
     is_cart = Cart.objects.filter(user=user, products=product).exists()
-
-    # Check if the product is in the user's wishlist
     is_wishlist = Wishlist.objects.filter(user=user, products=product).exists()
 
     context = {
@@ -60,35 +84,54 @@ def detalis(request, ref):
     }
     return render(request, 'app/detalis.html', context)
 
-
 @login_required
 def cart(request):
+    """
+    Render the cart page for the current user.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered cart page.
+    """
     user_cart = Cart.objects.get(user=request.user)
-
     products = user_cart.products.all()
-
     context = {
         'products': products,
         'cart': user_cart
     }
     return render(request, 'app/cart.html', context=context)
 
-
 @login_required
 def wishlist(request):
+    """
+    Render the wishlist page for the current user.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered wishlist page.
+    """
     user_wishlist= Wishlist.objects.get(user=request.user)
-
     products = user_wishlist.products.all()
-
     context = {
         'products': products
     }
     return render(request, 'app/wishlist.html', context=context)
 
-
-import json
 @login_required
 def product_buy(request):
+    """
+    Handle the product purchase action.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        JsonResponse: The response with success or error message.
+    """
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
         buy = data['buy']
@@ -102,23 +145,48 @@ def product_buy(request):
 
 @login_required
 def product_search(request):
+    """
+    Handle the product search action.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse or JsonResponse: The rendered search results page or error message.
+    """
     query = request.GET.get('q')
 
     if query:
         results = Product.objects.filter(
-        Q(name__icontains=query)
-    )
+            Q(name__icontains=query)
+        )
         return render(request, 'app/search.html', {'query': query, 'products': results})
     else:
         return JsonResponse({'error': 'No search query provided'}, status=400)
 
-
 @login_required
 def setting(request):
+    """
+    Render the settings page.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered settings page.
+    """
     return render(request, 'app/settings.html')
 
-
 def dark_mode(request):
+    """
+    Toggle dark mode setting.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponseRedirect: Redirect to the settings page.
+    """
     response = redirect('setting')  # إعادة التوجيه إلى صفحة الإعدادات أو الصفحة المطلوبة
 
     # التحقق من حالة الكعكة (cookie) الحالية
